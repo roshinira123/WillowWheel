@@ -170,4 +170,3 @@ This project is part of the WillowWheel insurance comparison platform.
 ---
 
 Made with ❤️ by Team Car Insurance
-# WillowWheel
