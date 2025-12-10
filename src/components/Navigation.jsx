@@ -9,9 +9,13 @@ const Navigation = ({ currentPage, setCurrentPage, mobileMenuOpen, setMobileMenu
       <div className="bg-white/20 border border-white/30 backdrop-blur-md rounded-full px-6 py-3 shadow-lg w-[90%] max-w-5xl text-white">
         <div className="flex items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <div className="w-9 h-9 bg-white/30 rounded-full flex items-center justify-center text-xl font-brand leading-none">
+            <button
+              onClick={() => { setCurrentPage('home'); setMobileMenuOpen(false); }}
+              aria-label="Go to homepage"
+              className="w-9 h-9 bg-white/30 rounded-full flex items-center justify-center text-xl font-brand leading-none"
+            >
               ww
-            </div>
+            </button>
           </div>
 
           <div className="hidden md:flex items-center gap-8 text-lg font-semibold">
