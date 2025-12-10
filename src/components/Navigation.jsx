@@ -29,12 +29,7 @@ const Navigation = ({ currentPage, setCurrentPage, mobileMenuOpen, setMobileMenu
               setCurrentPage={setCurrentPage}
               className={currentPage === 'about' ? 'border-b-2 border-[#ade9e4] pb-1' : ''}
             />
-            <button
-              onClick={() => setCurrentPage('getstarted')}
-              className="hover:text-white text-white"
-            >
-              Learn More
-            </button>
+            {/* Learn More removed per request */}
           </div>
 
           <button className="md:hidden" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
@@ -46,7 +41,6 @@ const Navigation = ({ currentPage, setCurrentPage, mobileMenuOpen, setMobileMenu
           <div className="mt-4 md:hidden space-y-2 text-left">
             <MobileNavLink label="Log In" page="login" currentPage={currentPage} setCurrentPage={setCurrentPage} setMobileMenuOpen={setMobileMenuOpen} />
             <MobileNavLink label="About Us" page="about" currentPage={currentPage} setCurrentPage={setCurrentPage} setMobileMenuOpen={setMobileMenuOpen} />
-            <MobileNavLink label="Learn More" page="getstarted" currentPage={currentPage} setCurrentPage={setCurrentPage} setMobileMenuOpen={setMobileMenuOpen} />
           </div>
         )}
       </div>

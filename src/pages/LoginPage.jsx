@@ -2,58 +2,49 @@ import React from 'react';
 
 const LoginPage = ({ setCurrentPage }) => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#b55cf5] via-[#9b76ff] to-[#6fa7ff] text-white flex flex-col">
-      <div className="flex-1 flex flex-col items-center justify-center px-6 pt-10 pb-12">
-        <div className="text-center space-y-10 w-full max-w-3xl">
-          <h1 className="text-4xl md:text-5xl font-semibold">Welcome Back</h1>
+    <div className="min-h-screen bg-gradient-to-br from-purple-400 via-purple-300 to-blue-300 flex items-center pt-24 pb-16">
+      <div className="max-w-md w-full mx-auto px-4">
+        <div className="bg-white/95 backdrop-blur rounded-2xl p-8 shadow-xl">
+          <h1 className="text-3xl font-bold text-gray-800 mb-2 text-center">Welcome back</h1>
+          <p className="text-gray-600 mb-6 text-center">Sign in to continue to WillowWheel</p>
 
-          <div className="space-y-4">
-            <div className="w-full max-w-xl mx-auto">
+          <form className="space-y-6" onSubmit={(e) => { e.preventDefault(); setCurrentPage('results'); }}>
+            <div>
+              <label className="block text-gray-700 font-medium mb-2">Email</label>
               <input
                 type="email"
-                placeholder="email*"
-                className="w-full bg-white/10 border border-white/30 rounded-full px-5 py-4 text-white placeholder:text-white/70 focus:outline-none focus:ring-2 focus:ring-white/50 shadow-[0_10px_25px_rgba(0,0,0,0.15)]"
+                required
+                placeholder="you@domain.com"
+                className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-400"
               />
             </div>
-            <div className="w-full max-w-xl mx-auto">
+
+            <div>
+              <label className="block text-gray-700 font-medium mb-2">Password</label>
               <input
                 type="password"
-                placeholder="password*"
-                className="w-full bg-white/10 border border-white/30 rounded-full px-5 py-4 text-white placeholder:text-white/70 focus:outline-none focus:ring-2 focus:ring-white/50 shadow-[0_10px_25px_rgba(0,0,0,0.15)]"
+                required
+                placeholder="Enter your password"
+                className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-400"
               />
             </div>
-          </div>
 
-          <div className="text-lg font-semibold">
-            <span>New to WillowWheel? </span>
             <button
-              onClick={() => setCurrentPage('getstarted')}
-              className="text-[#dbe96c] hover:underline"
+              type="submit"
+              className="w-full bg-yellow-300 hover:bg-yellow-400 text-gray-900 font-semibold py-3 rounded-full transition-all"
             >
-              Sign up
+              Sign in
             </button>
-          </div>
+          </form>
 
-          <div>
-            <button
-              type="button"
-              onClick={() => setCurrentPage('results')}
-              className="bg-[#dbe96c] text-[#1f2041] text-lg font-semibold px-10 py-3 rounded-full shadow-lg hover:brightness-105 transition"
-            >
-              Log in
+          <p className="text-center mt-6 text-gray-600">
+            New here?{' '}
+            <button onClick={() => setCurrentPage('getstarted')} className="text-purple-600 font-semibold hover:underline">
+              Create an account
             </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Footer */}
-      <div className="bg-gradient-to-r from-[#b55cf5] via-[#9b76ff] to-[#6fa7ff] py-8">
-        <div className="text-center space-y-2">
-          <div className="font-brand text-[40px] leading-none">ww</div>
-          <p className="text-lg">
-            2025 Made with <span role="img" aria-label="heart">❤️</span> by Team Car Insurance
           </p>
         </div>
+        {/* Intentionally no WW box/footer here (keeps login simple) */}
       </div>
     </div>
   );

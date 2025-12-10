@@ -18,13 +18,10 @@ const InsuranceQuote = ({ company, price, details, setCurrentPage }) => {
           <p key={idx} className="text-sm text-gray-600">{detail}</p>
         ))}
       </div>
-      <div className="flex gap-3">
-        <button className="flex-1 bg-white border-2 border-purple-600 text-purple-600 font-semibold py-2 rounded-full hover:bg-purple-50 transition-all">
-          Learn More
-        </button>
+      <div>
         <button 
           onClick={() => setCurrentPage('chatbot')}
-          className="flex-1 bg-yellow-300 hover:bg-yellow-400 text-gray-900 font-semibold py-2 rounded-full transition-all"
+          className="w-full bg-yellow-300 hover:bg-yellow-400 text-gray-900 font-semibold py-3 rounded-full transition-all"
         >
           View Policy
         </button>
