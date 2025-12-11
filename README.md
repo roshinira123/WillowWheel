@@ -138,22 +138,35 @@ Before you begin, ensure you have the following installed on your computer:
    Press `CTRL+C` in the terminal.
 
 **Optional**: If using AI features, ensure your API key is valid; otherwise, the fallback responses will be used.
+
 ## 🎨 Technologies Used
 
+### Frontend
 - **React 18** - UI library
 - **Vite** - Build tool and dev server
 - **Tailwind CSS** - Utility-first CSS framework
 - **Lucide React** - Icon library
 
+### Backend
+- **Python 3** - Backend programming language
+- **Flask** - Web framework for API endpoints
+- **Cerebras API** - AI-powered chatbot and quote generation
+- **python-dotenv** - Environment variable management
+- **requests** - HTTP library for API calls
+
 ## 📝 Available Scripts
 
+### Frontend Scripts
 - `npm run dev` - Start development server
 - `npm run build` - Build for production
 - `npm run preview` - Preview production build
 
+### Backend Scripts
+- `python3 app.py` - Start Flask backend server
+
 ## 🗂️ Component Breakdown
 
-### Components (`src/components/`)
+### Frontend Components (`src/components/`)
 - **Navigation**: Top navigation bar with mobile menu
 - **Footer**: Footer component used across pages
 - **NavLink**: Desktop navigation link
@@ -165,7 +178,7 @@ Before you begin, ensure you have the following installed on your computer:
 - **ProfileItem**: Individual profile field
 - **ActivityItem**: Activity log item
 
-### Pages (`src/pages/`)
+### Frontend Pages (`src/pages/`)
 - **HomePage**: Landing page with hero section and mission
 - **LoginPage**: User login form
 - **AboutPage**: About us page with team information
@@ -176,11 +189,27 @@ Before you begin, ensure you have the following installed on your computer:
 - **AgentPage**: Connect with insurance agent
 - **ProfilePage**: User profile dashboard
 
+### Backend Components
+- **app.py**: Flask API server with endpoints for chatbot and quote generation
+- **chatbot.py**: AI-powered insurance chatbot with Cerebras integration
+  - `insurance_ai_response()`: Generates conversational responses
+  - `fallback_response()`: Provides canned responses when API is unavailable
+- **quotes.py**: Insurance quote generation and analysis
+  - `get_ai_quotes()`: AI-powered quote generation via Cerebras
+  - `get_mock_quotes()`: Fallback quote generation with risk assessment
+  - Risk factors: age, driving history, vehicle type, location
+  - Discount calculations: good student, defensive driving, bundling
+
 ## 🔧 Configuration Files
 
+### Frontend
 - **vite.config.js**: Vite build configuration
 - **tailwind.config.js**: Tailwind CSS customization
 - **postcss.config.js**: PostCSS plugins configuration
+
+### Backend
+- **.env**: Environment variables (Cerebras API key)
+- **requirements.txt**: Python dependencies
 
 ## 📱 Pages Overview
 
@@ -196,14 +225,32 @@ Before you begin, ensure you have the following installed on your computer:
 
 ## 🐛 Troubleshooting
 
-### Port already in use
+### Frontend Issues
+
+#### Port already in use
 If port 5173 is already in use, Vite will automatically try the next available port. Check the terminal output for the actual URL.
 
-### Dependencies not installing
+#### Dependencies not installing
 Try deleting `node_modules` and `package-lock.json`, then run `npm install` again.
 
-### Styles not loading
+#### Styles not loading
 Ensure Tailwind CSS is properly configured and `src/index.css` is imported in `main.jsx`.
+
+### Backend Issues
+
+#### Port 5001 already in use
+If port 5001 is in use, modify the port in `app.py` or kill the process using that port.
+
+#### API key errors
+Ensure your `.env` file contains a valid `CEREBRAS_API_KEY`. The application will use fallback responses if the API key is missing or invalid.
+
+#### Python dependencies issues
+Make sure you're using Python 3.7 or higher. Try creating a virtual environment:
+```bash
+python3 -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+pip install -r requirements.txt
+```
 
 ## 📄 License
 
