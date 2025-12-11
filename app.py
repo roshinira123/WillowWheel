@@ -1,7 +1,12 @@
+from dotenv import load_dotenv
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from quote_engine import get_ai_quotes
-from ai_helper import insurance_ai_response
+
+# Load environment variables (e.g., API_KEY)
+load_dotenv()
+
+from quote_engine import get_ai_quotes  # noqa: E402
+from ai_helper import insurance_ai_response  # noqa: E402
 
 app = Flask(__name__)
 CORS(app)  # Enable CORS for frontend requests
@@ -22,8 +27,18 @@ def get_quotes():
         return jsonify({"error": "No data provided"}), 400
 
     # Use AI to generate tailored quotes
-    quotes = get_ai_quotes(data)
-    return jsonify({"quotes": quotes})
+    quotes_payload = get_ai_quotes(data)
+
+    # Normalize response shape for the frontend
+    if isinstance(quotes_payload, dict):
+        return jsonify({
+            "quotes": quotes_payload.get("quotes", []),
+            "analysis": quotes_payload.get("analysis"),
+            "recommendations": quotes_payload.get("recommendations"),
+        })
+    else:
+        # If a plain list was returned, keep backward compatibility
+        return jsonify({"quotes": quotes_payload})
 
 
 # --- AI chat assistant ---
