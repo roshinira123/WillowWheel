@@ -1,7 +1,7 @@
 const surveyQuestions = [
   { type: 'section', id: 's1', title: 'Section 1: Primary Policyholder Information' },
   { id: 1, title: 'Full Name', question: 'Full Name', type: 'text' },
-  { id: 2, title: 'Date of Birth', question: 'Date of Birth', type: 'text' },
+  { id: 2, title: 'Date of Birth', question: 'Date of Birth', type: 'date' },
   { id: 3, title: 'Phone Number', question: 'Phone Number', type: 'text' },
   { id: 4, title: 'Email Address', question: 'Email Address', type: 'text' },
   { id: 5, title: 'Home Address', question: 'Home Address', type: 'text' },
@@ -12,8 +12,8 @@ const surveyQuestions = [
 
   { type: 'section', id: 's3', title: 'Section 3: Drivers on the Policy' },
   { id: 8, title: 'Driver Name', question: 'Full Name (as shown on license)', type: 'text' },
-  { id: 9, title: 'Driver Date of Birth', question: 'Date of Birth', type: 'text' },
-  { id: 10, title: 'Gender', question: 'Gender (Optional)', type: 'text' },
+  { id: 9, title: 'Driver Date of Birth', question: 'Date of Birth', type: 'date' },
+  { id: 10, title: 'Gender', question: 'Gender (Optional)', type: 'select', options: ['Male', 'Female', 'Other', 'Prefer not to say'] },
   { id: 11, title: 'Driving Experience', question: 'Years of Driving Experience', type: 'text' },
   { id: 12, title: 'License Number', question: "Driver's License Number", type: 'text' },
   { id: 13, title: 'License State', question: 'State of License', type: 'text' },
@@ -24,7 +24,7 @@ const surveyQuestions = [
   { id: 18, title: 'Major Violations', question: 'Any major violations in the last 10 years?', type: 'options', options: ['Yes', 'No'] },
 
   { type: 'section', id: 's4', title: 'Section 4: Vehicles' },
-  { id: 19, title: 'Vehicle Year', question: 'Year', type: 'text' },
+  { id: 19, title: 'Vehicle Year', question: 'Year', type: 'year' },
   { id: 20, title: 'Vehicle Make', question: 'Make', type: 'text' },
   { id: 21, title: 'Vehicle Model', question: 'Model', type: 'text' },
   { id: 22, title: 'Vehicle Trim', question: 'Trim Level (if known)', type: 'text' },
@@ -53,7 +53,7 @@ const surveyQuestions = [
 
   { type: 'section', id: 's8', title: 'Section 8: Current Insurance (Optional)' },
   { id: 39, title: 'Current Insurance Company', question: 'Current Insurance Company', type: 'text' },
-  { id: 40, title: 'Policy Renewal Date', question: 'Policy Renewal Date', type: 'text' },
+  { id: 40, title: 'Policy Renewal Date', question: 'Policy Renewal Date', type: 'date' },
 ];
 
 export default surveyQuestions;

@@ -13,6 +13,7 @@ import ProfilePage from './pages/ProfilePage';
 const App = () => {
   const [currentPage, setCurrentPage] = useState('home');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [surveyData, setSurveyData] = useState(null);
 
   return (
     <div className="min-h-screen">
@@ -28,8 +29,8 @@ const App = () => {
       {currentPage === 'login' && <LoginPage setCurrentPage={setCurrentPage} />}
       {currentPage === 'about' && <AboutPage />}
       {currentPage === 'getstarted' && <GetStartedPage setCurrentPage={setCurrentPage} />}
-      {currentPage === 'survey' && <SurveyPage setCurrentPage={setCurrentPage} />}
-      {currentPage === 'results' && <ResultsPage setCurrentPage={setCurrentPage} />}
+      {currentPage === 'survey' && <SurveyPage setCurrentPage={setCurrentPage} setSurveyData={setSurveyData} />}
+      {currentPage === 'results' && <ResultsPage setCurrentPage={setCurrentPage} surveyData={surveyData} />}
       {currentPage === 'chatbot' && <ChatbotPage setCurrentPage={setCurrentPage} />}
       {currentPage === 'agent' && <AgentPage setCurrentPage={setCurrentPage} />}
       {currentPage === 'profile' && <ProfilePage />}
