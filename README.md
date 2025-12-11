@@ -110,6 +110,9 @@ Before you begin, ensure you have the following installed on your computer:
    ```
    CEREBRAS_API_KEY=your_api_key_here
    ```
+   ```
+   JWT_SECRET_KEY=your_api_key_here
+   ```
    
 3. **Install dependencies**:
    ```bash
