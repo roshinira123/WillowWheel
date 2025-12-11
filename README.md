@@ -96,6 +96,48 @@ Before you begin, ensure you have the following installed on your computer:
    npm run preview
    ```
 
+
+### Running the Backend
+
+1. **Navigate to the project directory**:
+   ```bash
+   cd /path/to/WillowWheel
+   ```
+
+2. **Set up environment variables**:
+   
+   Create a `.env` file in the project root with your Cerebras API key:
+   ```
+   CEREBRAS_API_KEY=your_api_key_here
+   ```
+   
+3. **Install dependencies**:
+   ```bash
+   python3 -m pip install -r requirements.txt
+   ```
+
+4. **Start the backend server**:
+   ```bash
+   python3 app.py
+   ```
+   
+   You should see output like:
+   ```
+   * Serving Flask app 'app'
+   * Debug mode: on
+   * Running on http://127.0.0.1:5001
+   Press CTRL+C to quit
+   ```
+
+5. **Access the backend**:
+   - Local: http://127.0.0.1:5001
+   - Network: http://<your_local_ip>:5001
+
+6. **Stopping the server**:
+   
+   Press `CTRL+C` in the terminal.
+
+**Optional**: If using AI features, ensure your API key is valid; otherwise, the fallback responses will be used.
 ## 🎨 Technologies Used
 
 - **React 18** - UI library
