@@ -1,3 +1,5 @@
+import { US_STATES } from './states.js';
+
 const surveyQuestions = [
   { type: 'section', id: 's1', title: 'Section 1: Primary Policyholder Information' },
   { id: 1, title: 'Full Name', question: 'Full Name', type: 'text' },
@@ -16,7 +18,7 @@ const surveyQuestions = [
   { id: 10, title: 'Gender', question: 'Gender (Optional)', type: 'select', options: ['Male', 'Female', 'Other', 'Prefer not to say'] },
   { id: 11, title: 'Driving Experience', question: 'Years of Driving Experience', type: 'text' },
   { id: 12, title: 'License Number', question: "Driver's License Number", type: 'text' },
-  { id: 13, title: 'License State', question: 'State of License', type: 'text' },
+  { id: 13, title: 'License State', question: 'State of License', type: 'select', options: US_STATES },
   { id: 14, title: 'Accidents (3 years)', question: 'Any accidents in the last 3 years?', type: 'options', options: ['Yes', 'No'] },
   { id: 15, title: 'Accidents (6 years)', question: 'Any accidents in the last 6 years?', type: 'options', options: ['Yes', 'No'] },
   { id: 16, title: 'Tickets (3 years)', question: 'Any tickets in the last 3 years?', type: 'options', options: ['Yes', 'No'] },
