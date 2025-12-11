@@ -97,6 +97,9 @@ const SurveyPage = ({ setCurrentPage, setSurveyData }) => {
 
           <form onSubmit={(e) => { 
             e.preventDefault(); 
+            
+            localStorage.setItem('surveyData', JSON.stringify(answers));
+            
             setSurveyData(answers);
             setCurrentPage('results'); 
           }} className="space-y-6">
@@ -296,5 +299,3 @@ const SurveyPage = ({ setCurrentPage, setSurveyData }) => {
 };
 
 export default SurveyPage;
-
-

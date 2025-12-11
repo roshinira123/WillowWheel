@@ -1,7 +1,75 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { AlertCircle, CheckCircle } from 'lucide-react';
 import Footer from '../components/Footer';
 
+const API_URL = 'http://127.0.0.1:5001/api';
+
 const GetStartedPage = ({ setCurrentPage }) => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
+
+  const handleRegister = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+    setSuccess('');
+
+    // Validate passwords match
+    if (password !== confirmPassword) {
+      setError('Passwords do not match');
+      setLoading(false);
+      return;
+    }
+
+    // Validate password length
+    if (password.length < 6) {
+      setError('Password must be at least 6 characters');
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const response = await fetch(`${API_URL}/auth/register`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name, email, password }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Registration failed');
+      }
+
+      // Store token in localStorage
+      localStorage.setItem('token', data.user.token);
+      localStorage.setItem('user', JSON.stringify({
+        user_id: data.user.user_id,
+        email: data.user.email,
+        name: data.user.name
+      }));
+
+      setSuccess('Account created successfully! Redirecting...');
+      
+      // Redirect to survey page
+      setTimeout(() => {
+        setCurrentPage('survey');
+      }, 1000);
+
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-400 via-purple-300 to-blue-300 pt-24 pb-16">
       <div className="max-w-md mx-auto px-4">
@@ -9,12 +77,29 @@ const GetStartedPage = ({ setCurrentPage }) => {
           <h1 className="text-3xl font-bold text-gray-800 mb-2 text-center">Get Started</h1>
           <p className="text-gray-600 mb-8 text-center">Create your account to find the perfect insurance</p>
           
-          <form className="space-y-6">
+          {error && (
+            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-start">
+              <AlertCircle className="w-5 h-5 text-red-600 mr-2 flex-shrink-0 mt-0.5" />
+              <p className="text-red-700 text-sm">{error}</p>
+            </div>
+          )}
+
+          {success && (
+            <div className="mb-4 p-3 bg-green-50 border border-green-200 rounded-lg flex items-start">
+              <CheckCircle className="w-5 h-5 text-green-600 mr-2 flex-shrink-0 mt-0.5" />
+              <p className="text-green-700 text-sm">{success}</p>
+            </div>
+          )}
+          
+          <form className="space-y-6" onSubmit={handleRegister}>
             <div>
               <label className="block text-gray-700 font-medium mb-2">Full Name</label>
               <input
                 type="text"
+                required
                 placeholder="Enter your name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
                 className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-400"
               />
             </div>
@@ -23,7 +108,10 @@ const GetStartedPage = ({ setCurrentPage }) => {
               <label className="block text-gray-700 font-medium mb-2">Email</label>
               <input
                 type="email"
+                required
                 placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-400"
               />
             </div>
@@ -32,16 +120,32 @@ const GetStartedPage = ({ setCurrentPage }) => {
               <label className="block text-gray-700 font-medium mb-2">Password</label>
               <input
                 type="password"
-                placeholder="Create a password"
+                required
+                placeholder="Create a password (min 6 characters)"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-400"
               />
             </div>
+
+            <div>
+              <label className="block text-gray-700 font-medium mb-2">Confirm Password</label>
+              <input
+                type="password"
+                required
+                placeholder="Confirm your password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-400"
+              />
+            </div>
+
             <button
-              type="button"
-              onClick={() => setCurrentPage('survey')}
-              className="w-full bg-yellow-300 hover:bg-yellow-400 text-gray-900 font-semibold py-3 rounded-full transition-all"
+              type="submit"
+              disabled={loading}
+              className="w-full bg-yellow-300 hover:bg-yellow-400 text-gray-900 font-semibold py-3 rounded-full transition-all disabled:bg-gray-300 disabled:cursor-not-allowed"
             >
-              Sign up
+              {loading ? 'Creating account...' : 'Sign up'}
             </button>
           </form>
           <p className="text-center mt-6 text-gray-600">
@@ -58,5 +162,3 @@ const GetStartedPage = ({ setCurrentPage }) => {
 };
 
 export default GetStartedPage;
-
-
