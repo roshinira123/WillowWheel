@@ -9,39 +9,75 @@ const ResultsPage = ({ setCurrentPage, surveyData }) => {
 
   useEffect(() => {
     const fetchQuotes = async () => {
-      if (!surveyData) {
+      // Get survey data from props or localStorage
+      const data = surveyData || JSON.parse(localStorage.getItem('surveyData') || 'null');
+      
+      if (!data) {
         setError('No survey data available');
         setLoading(false);
         return;
       }
 
+      // ⭐ Get authentication token from localStorage
+      const token = localStorage.getItem('token');
+      
+      // Check if user is logged in
+      if (!token) {
+        setError('Please log in to view quotes');
+        setLoading(false);
+        // Optionally redirect to login
+        // setCurrentPage('login');
+        return;
+      }
+
       try {
         setLoading(true);
+        console.log('Fetching quotes with token:', token ? 'Present' : 'Missing');
+        console.log('Survey data:', data);
+        
         const response = await fetch('http://localhost:5001/api/quotes', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`, // ⭐ Add Authorization header
           },
-          body: JSON.stringify(surveyData),
+          body: JSON.stringify(data),
         });
 
+        console.log('Response status:', response.status);
+
         if (!response.ok) {
-          throw new Error('Failed to fetch quotes');
+          // Handle specific error cases
+          if (response.status === 401) {
+            throw new Error('Your session has expired. Please log in again.');
+          } else if (response.status === 403) {
+            throw new Error('Access denied. Please check your credentials.');
+          }
+          throw new Error(`Failed to fetch quotes (${response.status})`);
         }
 
-        const data = await response.json();
-        setQuotes(data.quotes || []);
+        const result = await response.json();
+        console.log('Quotes received:', result);
+        
+        setQuotes(result.quotes || []);
         setError(null);
       } catch (err) {
         console.error('Error fetching quotes:', err);
-        setError('Failed to load quotes. Please try again.');
+        setError(err.message || 'Failed to load quotes. Please try again.');
+        
+        // If authentication error, redirect to login
+        if (err.message.includes('session has expired') || err.message.includes('log in')) {
+          setTimeout(() => {
+            setCurrentPage('login');
+          }, 2000);
+        }
       } finally {
         setLoading(false);
       }
     };
 
     fetchQuotes();
-  }, [surveyData]);
+  }, [surveyData, setCurrentPage]);
 
   const formatPrice = (price) => {
     return `$${price.toFixed(2)}`;
@@ -69,13 +105,28 @@ const ResultsPage = ({ setCurrentPage, surveyData }) => {
 
         {error && (
           <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg mb-6">
+            <p className="font-semibold">Error</p>
             <p>{error}</p>
+            {error.includes('log in') && (
+              <button 
+                onClick={() => setCurrentPage('login')}
+                className="mt-3 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition-all"
+              >
+                Go to Login
+              </button>
+            )}
           </div>
         )}
 
         {!loading && !error && quotes.length === 0 && (
           <div className="bg-white rounded-xl p-6 text-center">
-            <p className="text-gray-600">No quotes available. Please complete the survey again.</p>
+            <p className="text-gray-600 mb-4">No quotes available. Please complete the survey again.</p>
+            <button 
+              onClick={() => setCurrentPage('survey')}
+              className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-lg transition-all"
+            >
+              Return to Survey
+            </button>
           </div>
         )}
 
@@ -100,5 +151,3 @@ const ResultsPage = ({ setCurrentPage, surveyData }) => {
 };
 
 export default ResultsPage;
-
-
